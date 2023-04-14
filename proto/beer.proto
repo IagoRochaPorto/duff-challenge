@@ -1,0 +1,38 @@
+syntax = "proto3";
+package beerApi;
+
+message Beer {
+  int32 id = 1;
+  string type = 2;
+  int32 minTemperature = 3;
+  int32 maxTemperature = 4;
+}
+
+message AddBeerRequest {
+  string type = 1;
+  int32 minTemperature = 2;
+  int32 maxTemperature = 3;
+}
+
+message GetBeerRequest {
+  string type = 1;
+}
+
+message Empty {}
+
+message GetBeerByTypeRequest {
+  string type = 1;
+}
+
+message GetAllBeersResponse {
+  repeated Beer beers = 1;
+}
+
+service BeerService {
+  rpc AddBeer (AddBeerRequest) returns (Beer) {}
+  rpc GetAllBeers (Empty) returns (GetAllBeersResponse) {}
+  rpc GetBeerByType (GetBeerByTypeRequest) returns (Beer) {}
+  rpc UpdateBeer (Beer) returns (Beer) {}
+  rpc DeleteBeer (Beer) returns (Beer) {}
+}
+

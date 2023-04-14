@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate-proto": "protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. ./proto/beer.proto --ts_proto_opt=outputServices=grpc-js,env=node,esModuleInterop=true",
+    "dev": "ts-node -r tsconfig-paths/register src/main/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^4.12.0",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.8.14",
+    "@prisma/client": "^4.12.0",
+    "dotenv": "^16.0.3",
+    "ts-proto": "^1.146.0"
+  },
+  "prisma": {
+    "schema": "src/infra/db/prisma/schema.prisma",
+    "datamodel": "prisma/datamodel.prisma"
+  }
+}

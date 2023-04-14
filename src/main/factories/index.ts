@@ -1,0 +1,5 @@
+export * from './addBeerFactory'
+export * from './deleteBeerFactory'
+export * from './getBeersFactory'
+export * from './updateBeerFactory'
+export * from './serviceFactory'
