@@ -1,7 +1,7 @@
-import { BeerGateway } from "../../gateways/beerGateway";
-import { PlaylistGateway } from "../../gateways/playlistGateway";
-import { GetPlaylistByBeerTemperature, GetPlaylistByBeerTemperatureParams, GetPlaylistByBeerTemperatureResponse } from "../../useCases/getPlaylist";
-import { GrpcUseCaseAdapter } from '../adapters/grpcUseCaseAdapter'
+import { BeerGateway } from "../../../gateways/beerGateway";
+import { PlaylistGateway } from "../../../gateways/playlistGateway";
+import { GetPlaylistByBeerTemperature, GetPlaylistByBeerTemperatureParams, GetPlaylistByBeerTemperatureResponse } from "../../../useCases/getPlaylist";
+import { GrpcUseCaseAdapter } from '../../adapters/grpcUseCaseAdapter'
 
 export function makeGetPlaylist() {
   const {
