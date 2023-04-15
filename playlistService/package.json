@@ -1,0 +1,24 @@
+{
+  "name": "playlistservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate-beer-proto": "protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. ./proto/beer.proto --ts_proto_opt=outputServices=grpc-js,env=node,esModuleInterop=true",
+    "generate-playlist-proto": "protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. ./proto/playlist.proto --ts_proto_opt=outputServices=grpc-js,env=node,esModuleInterop=true"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.8.14",
+    "axios": "^1.3.5",
+    "dotenv": "^16.0.3",
+    "ts-proto": "^1.146.0"
+  }
+}

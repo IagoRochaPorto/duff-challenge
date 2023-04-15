@@ -1,0 +1,26 @@
+syntax = "proto3";
+package playlistApi;
+
+message GetPlayListByTemperatureRequest {
+    int32 temperature = 1;
+}
+
+message Track {
+  string name = 1;
+  string artist = 2;
+  string link = 3;
+}
+
+message Playlist {
+  string name = 1;
+  repeated Track tracks = 2;
+}
+
+message GetPlayListByTemperatureResponse {
+  string beerStyle = 1;
+  Playlist playlist = 2;
+}
+
+service PlaylistService {
+    rpc GetPlayListByTemperature (GetPlayListByTemperatureRequest) returns (GetPlayListByTemperatureResponse) {}
+}
