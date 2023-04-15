@@ -43,6 +43,10 @@ export interface GetAllBeersResponse {
   beers: Beer[];
 }
 
+export interface GetBeerByCloserAverageTemperatureRequest {
+  temperature: number;
+}
+
 function createBaseBeer(): Beer {
   return { id: 0, type: "", minTemperature: 0, maxTemperature: 0 };
 }
@@ -440,6 +444,66 @@ export const GetAllBeersResponse = {
   },
 };
 
+function createBaseGetBeerByCloserAverageTemperatureRequest(): GetBeerByCloserAverageTemperatureRequest {
+  return { temperature: 0 };
+}
+
+export const GetBeerByCloserAverageTemperatureRequest = {
+  encode(message: GetBeerByCloserAverageTemperatureRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.temperature !== 0) {
+      writer.uint32(8).int32(message.temperature);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetBeerByCloserAverageTemperatureRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetBeerByCloserAverageTemperatureRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 8) {
+            break;
+          }
+
+          message.temperature = reader.int32();
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetBeerByCloserAverageTemperatureRequest {
+    return { temperature: isSet(object.temperature) ? Number(object.temperature) : 0 };
+  },
+
+  toJSON(message: GetBeerByCloserAverageTemperatureRequest): unknown {
+    const obj: any = {};
+    message.temperature !== undefined && (obj.temperature = Math.round(message.temperature));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GetBeerByCloserAverageTemperatureRequest>, I>>(
+    base?: I,
+  ): GetBeerByCloserAverageTemperatureRequest {
+    return GetBeerByCloserAverageTemperatureRequest.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<GetBeerByCloserAverageTemperatureRequest>, I>>(
+    object: I,
+  ): GetBeerByCloserAverageTemperatureRequest {
+    const message = createBaseGetBeerByCloserAverageTemperatureRequest();
+    message.temperature = object.temperature ?? 0;
+    return message;
+  },
+};
+
 export type BeerServiceService = typeof BeerServiceService;
 export const BeerServiceService = {
   addBeer: {
@@ -487,6 +551,16 @@ export const BeerServiceService = {
     responseSerialize: (value: Beer) => Buffer.from(Beer.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Beer.decode(value),
   },
+  getBeerByCloserAverageTemperature: {
+    path: "/beerApi.BeerService/GetBeerByCloserAverageTemperature",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: GetBeerByCloserAverageTemperatureRequest) =>
+      Buffer.from(GetBeerByCloserAverageTemperatureRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => GetBeerByCloserAverageTemperatureRequest.decode(value),
+    responseSerialize: (value: Beer) => Buffer.from(Beer.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => Beer.decode(value),
+  },
 } as const;
 
 export interface BeerServiceServer extends UntypedServiceImplementation {
@@ -495,6 +569,7 @@ export interface BeerServiceServer extends UntypedServiceImplementation {
   getBeerByType: handleUnaryCall<GetBeerByTypeRequest, Beer>;
   updateBeer: handleUnaryCall<Beer, Beer>;
   deleteBeer: handleUnaryCall<Beer, Beer>;
+  getBeerByCloserAverageTemperature: handleUnaryCall<GetBeerByCloserAverageTemperatureRequest, Beer>;
 }
 
 export interface BeerServiceClient extends Client {
@@ -564,10 +639,25 @@ export interface BeerServiceClient extends Client {
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Beer) => void,
   ): ClientUnaryCall;
+  getBeerByCloserAverageTemperature(
+    request: GetBeerByCloserAverageTemperatureRequest,
+    callback: (error: ServiceError | null, response: Beer) => void,
+  ): ClientUnaryCall;
+  getBeerByCloserAverageTemperature(
+    request: GetBeerByCloserAverageTemperatureRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: Beer) => void,
+  ): ClientUnaryCall;
+  getBeerByCloserAverageTemperature(
+    request: GetBeerByCloserAverageTemperatureRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: Beer) => void,
+  ): ClientUnaryCall;
 }
 
 export const BeerServiceClient = makeGenericClientConstructor(BeerServiceService, "beerApi.BeerService") as unknown as {
-  new (address: string, credentials: ChannelCredentials, options?: Partial<ClientOptions>): BeerServiceClient;
+  new(address: string, credentials: ChannelCredentials, options?: Partial<ClientOptions>): BeerServiceClient;
   service: typeof BeerServiceService;
 };
 

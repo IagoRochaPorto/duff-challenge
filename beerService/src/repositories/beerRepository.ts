@@ -3,8 +3,9 @@ import { DbConnection } from "../infra/db/prisma/connection";
 import { Beer } from "../models/beer";
 import { AlreadyExistsError } from "../shared/errors/alreadyExistsError";
 import { ServerError } from "../shared/errors";
+import { BaseRepository } from "./baseRepository";
 
-export class BeerRepository {
+export class BeerRepository extends BaseRepository {
   async add(beer: Omit<Beer, 'id'>): Promise<Beer> {
     const connection = DbConnection.getInstance()
 

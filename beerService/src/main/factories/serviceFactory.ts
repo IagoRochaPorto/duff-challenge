@@ -1,18 +1,12 @@
 import { BeerServiceServer } from "../../../proto/beer"
-import { makeAddBeerUseCase, makeDeleteBeer, makeGetBeers, makeUpdateBeer } from "../factories"
+import { makeAddBeerUseCase, makeDeleteBeer, makeGetBeerByCloserAverageTemperature, makeGetBeers, makeUpdateBeer } from "../factories"
 
 export function makeBeerService(): BeerServiceServer {
   return {
     addBeer: async (call, callback) => {
-      try {
-
-        const addBeer = makeAddBeerUseCase()
-        const [error, createdBeer] = await addBeer.execute(call.request)
-        callback(error, createdBeer)
-      } catch (error: any) {
-        console.log(error)
-        callback(error, null)
-      }
+      const addBeer = makeAddBeerUseCase()
+      const [error, createdBeer] = await addBeer.execute(call.request)
+      callback(error, createdBeer)
     },
     getAllBeers: async (call, callback) => {
       const getBeers = makeGetBeers()
@@ -40,6 +34,11 @@ export function makeBeerService(): BeerServiceServer {
         }
       })
       callback(error, updatedBeer)
+    },
+    getBeerByCloserAverageTemperature: async (call, callback) => {
+      const getBeers = makeGetBeerByCloserAverageTemperature()
+      const [error, beer] = await getBeers.execute({ temperature: call.request.temperature })
+      callback(error, beer)
     }
   }
 }

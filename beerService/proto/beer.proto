@@ -28,11 +28,15 @@ message GetAllBeersResponse {
   repeated Beer beers = 1;
 }
 
+message GetBeerByCloserAverageTemperatureRequest {
+  int32 temperature = 1;
+}
+
 service BeerService {
   rpc AddBeer (AddBeerRequest) returns (Beer) {}
   rpc GetAllBeers (Empty) returns (GetAllBeersResponse) {}
   rpc GetBeerByType (GetBeerByTypeRequest) returns (Beer) {}
   rpc UpdateBeer (Beer) returns (Beer) {}
   rpc DeleteBeer (Beer) returns (Beer) {}
+  rpc GetBeerByCloserAverageTemperature (GetBeerByCloserAverageTemperatureRequest) returns (Beer) {}
 }
-

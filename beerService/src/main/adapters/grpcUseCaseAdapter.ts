@@ -11,6 +11,7 @@ export class GrpcUseCaseAdapter<Params, Response> {
       const response = await this.useCase.execute(params)
       return [null, response]
     } catch (error) {
+      console.error(error)
       const parsedError = this.identifyError(error)
       return [parsedError, null]
     }
