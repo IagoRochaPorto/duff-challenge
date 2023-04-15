@@ -1,9 +1,9 @@
 import { initDatabase } from './config/initDatabase'
-import { initServer } from './config/initServer'
+import { initApp } from './config/initApp'
 
 try {
   initDatabase()
-  initServer()
+  initApp()
 } catch (error) {
   console.log(error)
 }

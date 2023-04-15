@@ -2,16 +2,16 @@ import { Beer } from "../../proto/beer";
 import { BeerRepository } from "../repositories/beerRepository";
 import { UseCase } from '../shared/types/useCase'
 
-export type FindBeerByTemperatureParams = {
+export type GetBeerByTemperatureAvgParams = {
   temperature: number
 }
 
-export type FindBeerByTemperatureResponse = Beer
+export type GetBeerByTemperatureAvgResponse = Beer
 
-export class FindBeerByTemperature implements UseCase<FindBeerByTemperatureParams, FindBeerByTemperatureResponse> {
+export class GetBeerByTemperatureAvg implements UseCase<GetBeerByTemperatureAvgParams, GetBeerByTemperatureAvgResponse> {
   constructor(private readonly beerRepository: BeerRepository) { }
 
-  async execute(params: FindBeerByTemperatureParams): Promise<Beer> {
+  async execute(params: GetBeerByTemperatureAvgParams): Promise<Beer> {
     const beers = await this.beerRepository.raw<Beer[]>(`
       SELECT *, ABS(?  - ((minTemperature + maxTemperature) / 2)) as averageTemperature 
       FROM Beer

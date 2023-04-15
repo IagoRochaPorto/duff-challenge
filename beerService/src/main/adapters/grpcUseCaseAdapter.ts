@@ -2,8 +2,9 @@ import { ServerErrorResponse } from "@grpc/grpc-js"
 import { UseCase } from "../../shared/types/useCase"
 import { Status } from "@grpc/grpc-js/build/src/constants"
 import { AlreadyExistsError, NotFoundError } from "../../shared/errors"
+import { GrpcProcedure } from "../../presentation/grpc/protocols/grpcProcedure"
 
-export class GrpcUseCaseAdapter<Params, Response> {
+export class GrpcUseCaseAdapter<Params, Response> implements GrpcProcedure<Params, Response> {
   constructor(private readonly useCase: UseCase<Params, Response>) { }
 
   async execute(params: Params): Promise<[ServerErrorResponse | null, Response | null]> {

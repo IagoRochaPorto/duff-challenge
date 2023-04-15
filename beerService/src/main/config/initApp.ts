@@ -1,13 +1,10 @@
 import { Server, ServerCredentials } from "@grpc/grpc-js";
-import { makeBeerService } from "../factories";
-import { BeerServiceService } from "../../../proto/beer";
+import { makeBeerService } from "../factories/services/grpc/beerServiceFactory";
 
-export function initServer(): void {
+export function initApp(): void {
   const app = new Server()
 
-  const beerService = makeBeerService()
-
-  app.addService(BeerServiceService, beerService)
+  makeBeerService(app)
 
   const host = `${process.env.SERVER_HOST || 'localhost'}:${process.env.SERVER_PORT || '8080'}`
   app.bindAsync(host, ServerCredentials.createInsecure(), () => {
