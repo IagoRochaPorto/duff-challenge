@@ -39,6 +39,10 @@ export interface GetBeerByTypeRequest {
   type: string;
 }
 
+export interface DeleteBeerRequest {
+  id: number;
+}
+
 export interface GetAllBeersResponse {
   beers: Beer[];
 }
@@ -384,6 +388,62 @@ export const GetBeerByTypeRequest = {
   },
 };
 
+function createBaseDeleteBeerRequest(): DeleteBeerRequest {
+  return { id: 0 };
+}
+
+export const DeleteBeerRequest = {
+  encode(message: DeleteBeerRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).int32(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteBeerRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteBeerRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 8) {
+            break;
+          }
+
+          message.id = reader.int32();
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DeleteBeerRequest {
+    return { id: isSet(object.id) ? Number(object.id) : 0 };
+  },
+
+  toJSON(message: DeleteBeerRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = Math.round(message.id));
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<DeleteBeerRequest>, I>>(base?: I): DeleteBeerRequest {
+    return DeleteBeerRequest.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DeleteBeerRequest>, I>>(object: I): DeleteBeerRequest {
+    const message = createBaseDeleteBeerRequest();
+    message.id = object.id ?? 0;
+    return message;
+  },
+};
+
 function createBaseGetAllBeersResponse(): GetAllBeersResponse {
   return { beers: [] };
 }
@@ -546,8 +606,8 @@ export const BeerServiceService = {
     path: "/beerApi.BeerService/DeleteBeer",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: Beer) => Buffer.from(Beer.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => Beer.decode(value),
+    requestSerialize: (value: DeleteBeerRequest) => Buffer.from(DeleteBeerRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DeleteBeerRequest.decode(value),
     responseSerialize: (value: Beer) => Buffer.from(Beer.encode(value).finish()),
     responseDeserialize: (value: Buffer) => Beer.decode(value),
   },
@@ -568,7 +628,7 @@ export interface BeerServiceServer extends UntypedServiceImplementation {
   getAllBeers: handleUnaryCall<Empty, GetAllBeersResponse>;
   getBeerByType: handleUnaryCall<GetBeerByTypeRequest, Beer>;
   updateBeer: handleUnaryCall<Beer, Beer>;
-  deleteBeer: handleUnaryCall<Beer, Beer>;
+  deleteBeer: handleUnaryCall<DeleteBeerRequest, Beer>;
   getBeerByCloserAverageTemperature: handleUnaryCall<GetBeerByCloserAverageTemperatureRequest, Beer>;
 }
 
@@ -627,14 +687,17 @@ export interface BeerServiceClient extends Client {
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Beer) => void,
   ): ClientUnaryCall;
-  deleteBeer(request: Beer, callback: (error: ServiceError | null, response: Beer) => void): ClientUnaryCall;
   deleteBeer(
-    request: Beer,
+    request: DeleteBeerRequest,
+    callback: (error: ServiceError | null, response: Beer) => void,
+  ): ClientUnaryCall;
+  deleteBeer(
+    request: DeleteBeerRequest,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: Beer) => void,
   ): ClientUnaryCall;
   deleteBeer(
-    request: Beer,
+    request: DeleteBeerRequest,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: Beer) => void,

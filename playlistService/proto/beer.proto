@@ -24,6 +24,10 @@ message GetBeerByTypeRequest {
   string type = 1;
 }
 
+message DeleteBeerRequest {
+  int32 id = 1;
+}
+
 message GetAllBeersResponse {
   repeated Beer beers = 1;
 }
@@ -37,7 +41,6 @@ service BeerService {
   rpc GetAllBeers (Empty) returns (GetAllBeersResponse) {}
   rpc GetBeerByType (GetBeerByTypeRequest) returns (Beer) {}
   rpc UpdateBeer (Beer) returns (Beer) {}
-  rpc DeleteBeer (Beer) returns (Beer) {}
+  rpc DeleteBeer (DeleteBeerRequest) returns (Beer) {}
   rpc GetBeerByCloserAverageTemperature (GetBeerByCloserAverageTemperatureRequest) returns (Beer) {}
 }
-

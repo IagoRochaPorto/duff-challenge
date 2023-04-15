@@ -39,12 +39,12 @@ export interface GetBeerByTypeRequest {
   type: string;
 }
 
-export interface DeleteBeerRequest {
-  id: number;
-}
-
 export interface GetAllBeersResponse {
   beers: Beer[];
+}
+
+export interface DeleteBeerRequest {
+  id: string;
 }
 
 export interface GetBeerByCloserAverageTemperatureRequest {
@@ -388,62 +388,6 @@ export const GetBeerByTypeRequest = {
   },
 };
 
-function createBaseDeleteBeerRequest(): DeleteBeerRequest {
-  return { id: 0 };
-}
-
-export const DeleteBeerRequest = {
-  encode(message: DeleteBeerRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.id !== 0) {
-      writer.uint32(8).int32(message.id);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteBeerRequest {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseDeleteBeerRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag != 8) {
-            break;
-          }
-
-          message.id = reader.int32();
-          continue;
-      }
-      if ((tag & 7) == 4 || tag == 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): DeleteBeerRequest {
-    return { id: isSet(object.id) ? Number(object.id) : 0 };
-  },
-
-  toJSON(message: DeleteBeerRequest): unknown {
-    const obj: any = {};
-    message.id !== undefined && (obj.id = Math.round(message.id));
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<DeleteBeerRequest>, I>>(base?: I): DeleteBeerRequest {
-    return DeleteBeerRequest.fromPartial(base ?? {});
-  },
-
-  fromPartial<I extends Exact<DeepPartial<DeleteBeerRequest>, I>>(object: I): DeleteBeerRequest {
-    const message = createBaseDeleteBeerRequest();
-    message.id = object.id ?? 0;
-    return message;
-  },
-};
-
 function createBaseGetAllBeersResponse(): GetAllBeersResponse {
   return { beers: [] };
 }
@@ -500,6 +444,62 @@ export const GetAllBeersResponse = {
   fromPartial<I extends Exact<DeepPartial<GetAllBeersResponse>, I>>(object: I): GetAllBeersResponse {
     const message = createBaseGetAllBeersResponse();
     message.beers = object.beers?.map((e) => Beer.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseDeleteBeerRequest(): DeleteBeerRequest {
+  return { id: "" };
+}
+
+export const DeleteBeerRequest = {
+  encode(message: DeleteBeerRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteBeerRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteBeerRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DeleteBeerRequest {
+    return { id: isSet(object.id) ? String(object.id) : "" };
+  },
+
+  toJSON(message: DeleteBeerRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<DeleteBeerRequest>, I>>(base?: I): DeleteBeerRequest {
+    return DeleteBeerRequest.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DeleteBeerRequest>, I>>(object: I): DeleteBeerRequest {
+    const message = createBaseDeleteBeerRequest();
+    message.id = object.id ?? "";
     return message;
   },
 };
