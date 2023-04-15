@@ -9,7 +9,7 @@ export function initServer(): void {
 
   app.addService(PlaylistServiceService, playlistService)
 
-  const host = `${process.env.SERVER_HOST || 'localhost'}:${process.env.SERVER_PORT || '8080'}`
+  const host = `${process.env.SERVER_HOST || 'localhost'}:${process.env.SERVER_PORT || '8081'}`
 
   app.bindAsync(host, ServerCredentials.createInsecure(), () => {
     app.start()
