@@ -1,4 +1,4 @@
-import { Beer } from "../../proto/beer";
+import { Beer } from "../proto/beer";
 import { BeerRepository } from "../repositories/beerRepository";
 
 export type DeleteBeerParams = { id: number }

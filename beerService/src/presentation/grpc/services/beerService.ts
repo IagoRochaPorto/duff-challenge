@@ -1,4 +1,4 @@
-import { AddBeerRequest, Beer, BeerServiceServer, DeleteBeerRequest, GetBeerByCloserAverageTemperatureRequest } from "../../../../proto/beer"
+import { AddBeerRequest, Beer, BeerServiceServer, DeleteBeerRequest, GetBeerByCloserAverageTemperatureRequest } from "../../../proto/beer"
 import { GetBeersParams, UpdateBeerParams, UpdateBeerResponse } from "../../../usecases"
 import { GrpcProcedure } from "../protocols/grpcProcedure"
 
