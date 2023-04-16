@@ -1,6 +1,6 @@
 import { credentials } from '@grpc/grpc-js';
 import { Beer } from '../models/beer'
-import { BeerServiceClient } from '../../proto/beer'
+import { BeerServiceClient } from '../proto/beer'
 import { Status } from '@grpc/grpc-js/build/src/constants';
 import { NotFoundError, ServerError } from '../shared/errors';
 

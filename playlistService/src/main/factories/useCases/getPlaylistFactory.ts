@@ -8,12 +8,11 @@ export function makeGetPlaylist() {
     CLIENT_ID,
     CLIENT_SECRET,
     BEER_SERVICE_HOST,
-    BEER_SERVICE_PORT
   } = process.env
 
-  if (CLIENT_ID && CLIENT_SECRET && BEER_SERVICE_HOST && BEER_SERVICE_PORT) {
+  if (CLIENT_ID && CLIENT_SECRET && BEER_SERVICE_HOST) {
     const useCase = new GetPlaylistByBeerTemperature(
-      new BeerGateway(`${BEER_SERVICE_HOST}:${BEER_SERVICE_PORT}`),
+      new BeerGateway(BEER_SERVICE_HOST),
       new PlaylistGateway(CLIENT_ID, CLIENT_SECRET)
     )
 

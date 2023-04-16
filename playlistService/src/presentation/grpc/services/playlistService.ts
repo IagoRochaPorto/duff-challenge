@@ -1,4 +1,4 @@
-import { GetPlayListByTemperatureRequest, GetPlayListByTemperatureResponse, PlaylistServiceServer } from "../../../../proto/playlist";
+import { GetPlayListByTemperatureRequest, GetPlayListByTemperatureResponse, PlaylistServiceServer } from "../../../proto/playlist";
 import { GrpcProcedure } from "../protocols/grpcProcedure";
 
 export const PlaylistService = {

@@ -6,9 +6,12 @@ export function initApp(): void {
 
   makeBeerService(app)
 
-  const host = `${process.env.SERVER_HOST || 'localhost'}:${process.env.SERVER_PORT || '8080'}`
-  app.bindAsync(host, ServerCredentials.createInsecure(), () => {
-    app.start()
-    console.log("Server running at http://localhost:8080")
-  })
+  if (process.env.SERVER_HOST) {
+    app.bindAsync(process.env.SERVER_HOST, ServerCredentials.createInsecure(), () => {
+      app.start()
+      console.log("Server running at http://localhost:8080")
+    })
+  } else {
+    throw new Error("SERVER_HOST not found")
+  }
 }

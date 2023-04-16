@@ -6,10 +6,11 @@ export function initServer(): void {
 
   makePlaylistService(app)
 
-  const host = `${process.env.SERVER_HOST || 'localhost'}:${process.env.SERVER_PORT || '8081'}`
 
-  app.bindAsync(host, ServerCredentials.createInsecure(), () => {
+  if (!process.env.SERVER_HOST) throw new Error("SERVER_HOST not found")
+
+  app.bindAsync(process.env.SERVER_HOST, ServerCredentials.createInsecure(), () => {
     app.start()
-    console.log("Server running at http://localhost:8080")
+    console.log("Server running at http://localhost:8081")
   })
 }

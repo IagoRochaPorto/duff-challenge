@@ -1,5 +1,5 @@
 import { Server } from '@grpc/grpc-js'
-import { PlaylistServiceServer, PlaylistServiceService } from '../../../../../proto/playlist'
+import { PlaylistServiceServer, PlaylistServiceService } from '../../../../proto/playlist'
 import { makeGetPlaylist } from '../../index'
 
 export function makePlaylistService(app: Server) {
