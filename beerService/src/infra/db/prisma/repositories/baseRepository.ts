@@ -1,6 +1,7 @@
-import { DbConnection } from "../infra/db/prisma/connection";
+import { RawSqlRepository } from "../../../../repositories/rawSqlRepository";
+import { DbConnection } from "../connection";
 
-export class BaseRepository {
+export class BaseRepository implements RawSqlRepository {
   protected readonly connection = DbConnection.getInstance()
 
   public raw<T>(query: string, ...params: any[]): Promise<T> {

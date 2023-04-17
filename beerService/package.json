@@ -18,13 +18,14 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "prisma": "^4.12.0",
     "@grpc/grpc-js": "^1.8.14",
     "@prisma/client": "^4.12.0",
     "dotenv": "^16.0.3",
+    "prisma": "^4.12.0",
     "ts-proto": "^1.146.0"
   },
   "prisma": {
+    "jest": "^29.5.0",
     "schema": "src/infra/db/prisma/schema.prisma",
     "datamodel": "prisma/datamodel.prisma"
   }

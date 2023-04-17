@@ -1,5 +1,5 @@
 import { Beer } from "../proto/beer";
-import { BeerRepository } from "../repositories/beerRepository";
+import { RawSqlRepository } from "../repositories/rawSqlRepository";
 import { UseCase } from '../shared/types/useCase'
 
 export type GetBeerByTemperatureAvgParams = {
@@ -9,10 +9,10 @@ export type GetBeerByTemperatureAvgParams = {
 export type GetBeerByTemperatureAvgResponse = Beer
 
 export class GetBeerByTemperatureAvg implements UseCase<GetBeerByTemperatureAvgParams, GetBeerByTemperatureAvgResponse> {
-  constructor(private readonly beerRepository: BeerRepository) { }
+  constructor(private readonly repository: RawSqlRepository) { }
 
   async execute(params: GetBeerByTemperatureAvgParams): Promise<Beer> {
-    const beers = await this.beerRepository.raw<Beer[]>(`
+    const beers = await this.repository.raw<Beer[]>(`
       SELECT *, ABS(?  - ((minTemperature + maxTemperature) / 2)) as averageTemperature 
       FROM Beer
       ORDER BY ABS(?  - ((minTemperature + maxTemperature) / 2));

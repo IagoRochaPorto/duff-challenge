@@ -1,14 +1,14 @@
 import { Beer } from "../proto/beer";
-import { BeerRepository } from "../repositories/beerRepository";
+import { DeleteBeerRepository } from "../repositories/beer";
 
 export type DeleteBeerParams = { id: number }
 export type DeleteBeerResponse = Beer
 
 export class DeleteBeer {
-  constructor(private readonly beerRepository: BeerRepository) { }
+  constructor(private readonly beerRepository: DeleteBeerRepository) { }
 
-  async execute({ id }: DeleteBeerParams): Promise<DeleteBeerResponse> {
-    const deletedBeer = await this.beerRepository.delete(id)
+  async execute(params: DeleteBeerParams): Promise<DeleteBeerResponse> {
+    const deletedBeer = await this.beerRepository.deleteBeer(params)
     return deletedBeer
   }
 }

@@ -1,4 +1,4 @@
-import { BeerRepository } from "../../../repositories/beerRepository"
+import { BeerRepository } from "../../../infra/db/prisma/repositories/beerRepository"
 import { GetBeers, GetBeersParams, GetBeersResponse } from "../../../usecases"
 import { GrpcUseCaseAdapter } from "../../adapters/grpcUseCaseAdapter"
 

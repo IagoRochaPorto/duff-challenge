@@ -1,4 +1,4 @@
-import { BeerRepository } from "../../../repositories/beerRepository"
+import { BeerRepository } from "../../../infra/db/prisma/repositories/beerRepository"
 import { GetBeerByTemperatureAvg, GetBeerByTemperatureAvgParams, GetBeerByTemperatureAvgResponse } from "../../../usecases/getBeerByTemperatureAvg"
 import { GrpcUseCaseAdapter } from "../../adapters/grpcUseCaseAdapter"
 
