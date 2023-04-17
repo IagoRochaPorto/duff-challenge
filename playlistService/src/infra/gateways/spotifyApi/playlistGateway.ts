@@ -1,6 +1,7 @@
 import axios from 'axios'
-import { Playlist } from '../models/playlist'
-import { NotFoundError } from '../shared/errors'
+import { Playlist } from '../../../models/playlist'
+import { NotFoundError } from '../../../shared/errors'
+import { GetPlaylistBySearchValueGateway } from '../../../gateways/getPlaylistBySearchValueGateway'
 
 type PlaylistMetaData = {
   name: string,
@@ -32,7 +33,7 @@ type AccessToken = {
   expires_in: number
 }
 
-export class PlaylistGateway {
+export class PlaylistGateway implements GetPlaylistBySearchValueGateway {
   private headers: { Authorization: string }
   private tokenTimeout: number
 
@@ -42,7 +43,7 @@ export class PlaylistGateway {
 
   }
 
-  async getPlaylistBySearchValue(searchValue: string): Promise<Playlist> {
+  async getPlaylistBySearchValue({ searchValue }: GetPlaylistBySearchValueGateway.Params): Promise<GetPlaylistBySearchValueGateway.Response> {
     await this.updateAccessToken()
     const playlist = await this.getPlaylistMetaDataFromSearchValue(searchValue)
     const tracks = await this.getPlaylistData(playlist.tracks.href)

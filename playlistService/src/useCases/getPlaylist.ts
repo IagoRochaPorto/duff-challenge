@@ -1,5 +1,5 @@
-import { BeerGateway } from "../gateways/beerGateway";
-import { PlaylistGateway } from "../gateways/playlistGateway";
+import { GetBeerByTemperatureAvgGateway } from "../gateways/getBeerByTemperatureAvgGateway";
+import { GetPlaylistBySearchValueGateway } from "../gateways/getPlaylistBySearchValueGateway";
 import { Playlist } from "../models/playlist";
 import { UseCase } from "../shared/types/useCase";
 
@@ -14,13 +14,15 @@ export type GetPlaylistByBeerTemperatureResponse = {
 
 export class GetPlaylistByBeerTemperature implements UseCase<GetPlaylistByBeerTemperatureParams, GetPlaylistByBeerTemperatureResponse> {
   constructor(
-    private beerGateway: BeerGateway,
-    private playlistGateway: PlaylistGateway,
+    private beerGateway: GetBeerByTemperatureAvgGateway,
+    private playlistGateway: GetPlaylistBySearchValueGateway,
   ) { }
 
-  async execute(params: GetPlaylistByBeerTemperatureParams): Promise<GetPlaylistByBeerTemperatureResponse> {
-    const beer = await this.beerGateway.getBeerByTemperatureAvg(params.temperature)
-    const playlist = await this.playlistGateway.getPlaylistBySearchValue(`${beer.type} beer`)
+  async execute({ temperature }: GetPlaylistByBeerTemperatureParams): Promise<GetPlaylistByBeerTemperatureResponse> {
+    const beer = await this.beerGateway.getBeerByTemperatureAvg({ temperature })
+    const playlist = await this.playlistGateway.getPlaylistBySearchValue({
+      searchValue: `${beer.type} beer`
+    })
 
     return {
       beerStyle: beer.type,

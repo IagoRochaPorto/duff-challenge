@@ -1,5 +1,5 @@
-import { BeerGateway } from "../../../gateways/beerGateway";
-import { PlaylistGateway } from "../../../gateways/playlistGateway";
+import { BeerGateway } from "../../../infra/gateways/grpc/beerGateway";
+import { PlaylistGateway } from "../../../infra/gateways/spotifyApi/playlistGateway";
 import { GetPlaylistByBeerTemperature, GetPlaylistByBeerTemperatureParams, GetPlaylistByBeerTemperatureResponse } from "../../../useCases/getPlaylist";
 import { GrpcUseCaseAdapter } from '../../adapters/grpcUseCaseAdapter'
 
