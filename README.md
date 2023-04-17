@@ -31,7 +31,7 @@ Serviço criado para disponibilizar um CRUD de cervejas, contendo o tipo, temper
 
 ### Playlist Service
 
-Serviço criado para disponibilizar uma playlist baseada no tipo de cerveja que é encontrada baseada na temperatura média. É dependente direto do serviço de cerveja para buscar a cerveja correta e faz a busca da playlist através da playlist do spotify.
+Serviço criado para disponibilizar uma playlist baseada no tipo de cerveja que é encontrada baseada na temperatura média. É dependente direto do serviço de cerveja para buscar a cerveja correta e faz a busca da playlist através da api do spotify.
 
 ### Web API
 
