@@ -3,6 +3,7 @@ import { BeerServiceClient } from '../proto/beer'
 import { PlaylistServiceClient } from '../proto/playlist'
 import { credentials } from '@grpc/grpc-js'
 import { config } from 'dotenv'
+import { Status } from '@grpc/grpc-js/build/src/constants'
 
 config()
 
@@ -25,9 +26,14 @@ app.get('/beer', (req, res) => {
   try {
     beerClient.getAllBeers({}, (err, response) => {
       if (err) {
-        console.log('/beer')
-        console.log(err)
-        res.status(500).send()
+        if (err.code === Status.NOT_FOUND) {
+          res.status(404).send()
+          return
+        } else {
+          console.log('/beer/:type')
+          console.log(err)
+          res.status(500).send()
+        }
       }
       res.send(response?.beers)
     })
@@ -42,6 +48,12 @@ app.get('/beer/:type', (req, res) => {
   try {
     beerClient.getBeerByType({ type: req.params.type }, (err, response) => {
       if (err) {
+        if (err.code === Status.NOT_FOUND) {
+          res.status(404).send()
+          return
+        } else {
+          res.status(500).send()
+        }
         console.log('/beer/:type')
         console.log(err)
         res.status(500).send()
@@ -119,9 +131,15 @@ app.get('/beer/:temperature/playlist', (req, res) => {
   try {
     playlistClient.getPlayListByTemperature({ temperature: parseInt(req.params.temperature) }, (err, response) => {
       if (err) {
-        console.log('/beer/:temperature/playlist GET')
-        console.log(err)
-        res.status(500).send()
+        if (err.code === Status.NOT_FOUND) {
+          res.status(404).send()
+          return
+        } else {
+          console.log('/beer/:temperature/playlist GET')
+          console.log(err)
+          res.status(500).send()
+          return
+        }
       }
       res.send(response)
     })

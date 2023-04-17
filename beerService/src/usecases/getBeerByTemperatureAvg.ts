@@ -1,5 +1,6 @@
 import { Beer } from "../proto/beer";
 import { RawSqlRepository } from "../repositories/rawSqlRepository";
+import { NotFoundError } from "../shared/errors";
 import { UseCase } from '../shared/types/useCase'
 
 export type GetBeerByTemperatureAvgParams = {
@@ -17,6 +18,10 @@ export class GetBeerByTemperatureAvg implements UseCase<GetBeerByTemperatureAvgP
       FROM Beer
       ORDER BY ABS(?  - ((minTemperature + maxTemperature) / 2));
     `, params.temperature, params.temperature);
+
+    if (!beers?.length) {
+      throw new NotFoundError('Beer not found')
+    }
 
     return beers[0]
   }
