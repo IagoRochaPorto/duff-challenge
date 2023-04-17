@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "generate-proto": "protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. ./proto/beer.proto --ts_proto_opt=outputServices=grpc-js,env=node,esModuleInterop=true",
+    "generate-proto": "protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. ./src/proto/beer.proto --ts_proto_opt=outputServices=grpc-js,env=node,esModuleInterop=true",
     "dev": "ts-node -r tsconfig-paths/register src/main/app.ts",
     "type-check": "tsc --noEmit",
     "build": "rm -rf bin && tsc"
