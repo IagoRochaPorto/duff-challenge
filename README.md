@@ -59,7 +59,7 @@ executar migrations
 
 acessar a api através do localhost e porta referenciada no arquivo .env da webAPI
 
-## Como executar em produção
+## Como fazer o deploy
 
 Lembrando que em produção o banco de dados não consta no arquivo do docker compose, devendo ser criada uma instância do banco no host específico do banco de dados.
 
@@ -76,6 +76,12 @@ executar migrations
 
 acessar a api através do host e porta referenciada no arquivo .env da webAPI
 
+
+## Rodar cada serviço em um host diferente
+
+- Cada serviço contém um Dockerfile próprio, basta apontar os hosts corretamente nos arquivos .env
+- O local onde os serviços serão hospedados deve suportar http2
+  
 ## ROTAS
 
 - [GET] /beer -> Retorna as cervejas
