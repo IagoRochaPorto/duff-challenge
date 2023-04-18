@@ -1,9 +1,11 @@
 import { GetBeerRepository } from "../../src/repositories/beer"
+import { NotFoundError } from "../../src/shared/errors"
 import { GetBeers } from "../../src/usecases"
 import { makeFakeBeer } from "../fakes"
 
 function makeSut() {
   const addBeerRepositoryStub: GetBeerRepository = { getBeers: jest.fn() }
+  jest.spyOn(addBeerRepositoryStub, 'getBeers').mockReturnValue(Promise.resolve([makeFakeBeer()]))
   const sut = new GetBeers(addBeerRepositoryStub)
   return {
     sut,
@@ -36,6 +38,13 @@ describe('Get beers use case', () => {
     jest.spyOn(addBeerRepositoryStub, 'getBeers').mockReturnValueOnce(Promise.resolve([makeFakeBeer()]))
     const beers = await sut.execute()
     expect(beers).toEqual([makeFakeBeer()])
+  })
+
+  it('Should throw if getBeersRepository returns empty', async () => {
+    const { sut, addBeerRepositoryStub } = makeSut()
+    jest.spyOn(addBeerRepositoryStub, 'getBeers').mockReturnValueOnce(Promise.resolve(null as unknown as []))
+    const promise = sut.execute()
+    await expect(promise).rejects.toThrow(new NotFoundError('Beer not found'))
   })
 
   it('Should throw if getBeersRepository throws', async () => {

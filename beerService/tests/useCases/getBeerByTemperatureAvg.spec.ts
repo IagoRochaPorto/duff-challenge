@@ -1,10 +1,11 @@
 import { RawSqlRepository } from '../../src/repositories/rawSqlRepository'
+import { NotFoundError } from '../../src/shared/errors'
 import { GetBeerByTemperatureAvg } from '../../src/usecases'
 import { makeFakeBeer } from '../fakes'
 
 function makeSut() {
   const rawSqlStub: RawSqlRepository = { raw: jest.fn() }
-  jest.spyOn(rawSqlStub, 'raw').mockReturnValue(Promise.resolve([]))
+  jest.spyOn(rawSqlStub, 'raw').mockReturnValue(Promise.resolve([makeFakeBeer()]))
   const sut = new GetBeerByTemperatureAvg(rawSqlStub)
   return {
     sut,
@@ -33,6 +34,15 @@ describe('Get beer by temperature average use case', () => {
       temperature: -2
     })
     expect(beer).toEqual(makeFakeBeer())
+  })
+
+  it('Should throw if rawSql returns empty', async () => {
+    const { sut, rawSqlStub } = makeSut()
+    jest.spyOn(rawSqlStub, 'raw').mockReturnValueOnce(Promise.resolve())
+    const promise = sut.execute({
+      temperature: -2
+    })
+    await expect(promise).rejects.toThrow(new NotFoundError('Beer not found'))
   })
 
   it('Should throw if rawSql throws', async () => {
