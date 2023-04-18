@@ -37,6 +37,11 @@ Serviço criado para disponibilizar uma playlist baseada no tipo de cerveja que 
 
 Serviço criado para disponibilizar uma API REST para que o cliente acesse os serviços, é apenas um express simples que faz a tradução para gRPC, nesse contexto está sendo utilzado para simular um API gateway fake.
 
+## O que pode ser melhorado:
+- testes unitários nas camadas mais externas, como repositório e apresentação (grpc)
+- validação do conteúdo vindo da api rest, fazendo o `sanitize` do corpo da requisição antes de enviar para o serviço correto.
+- middleware de error handler no webApi, garantindo que todos os erros serão tratados corretamente, independente da rota acessada
+
 ### Dependências para execução da API
 - docker
 - docker compose
